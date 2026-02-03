@@ -3,172 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal Pengajar</title>
+    <title>Portal Pengajar Neutron</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        /* --- VARIABEL WARNA & TEMA --- */
         :root {
-            --primary: #25D366;
-            --dark: #075E54;
-            --bg: #f0f2f5;
-            --card-bg: #ffffff;
-            --text: #333;
+            --primary: #D32F2F; /* Merah Neutron */
+            --primary-dark: #B71C1C;
+            --secondary: #f5f5f5; /* Abu-abu muda */
+            --text-dark: #333333;
+            --text-grey: #666666;
+            --white: #ffffff;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
             --radius: 12px;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--secondary);
             margin: 0;
             padding: 20px;
-            color: var(--text);
+            color: var(--text-dark);
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        /* --- STYLES FORM DATA DIRI (LOGIN) --- */
+        /* --- HALAMAN LOGIN (FORM SISWA) --- */
         #loginSection {
-            max-width: 500px;
-            margin: 50px auto;
-            background: var(--card-bg);
-            padding: 30px;
+            max-width: 480px;
+            margin: 40px auto;
+            background: var(--white);
+            padding: 40px;
             border-radius: var(--radius);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow);
+            border-top: 5px solid var(--primary);
+        }
+
+        h2 {
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: var(--text-grey);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
         }
 
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
             font-weight: 600;
             font-size: 0.9rem;
+            color: var(--text-dark);
         }
 
         input, select {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
+            padding: 12px 15px;
+            border: 2px solid #eee;
             border-radius: 8px;
-            font-size: 16px;
+            font-family: inherit;
+            font-size: 14px;
             box-sizing: border-box;
+            transition: border-color 0.3s;
+            background-color: #fafafa;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: var(--white);
+        }
+
+        /* Input khusus keperluan lainnya (hidden by default) */
+        #inputLainnyaContainer {
+            display: none;
+            margin-top: 10px;
+            animation: fadeIn 0.3s ease-in-out;
         }
 
         button.primary-btn {
             width: 100%;
-            padding: 12px;
-            background-color: var(--dark);
+            padding: 14px;
+            background-color: var(--primary);
             color: white;
             border: none;
             border-radius: 8px;
             font-size: 16px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
             margin-top: 10px;
-            transition: background 0.3s;
+            box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
         }
 
         button.primary-btn:hover {
-            background-color: #054c44;
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
         }
 
-        /* --- STYLES DAFTAR PENGAJAR --- */
+        /* --- HALAMAN APLIKASI UTAMA --- */
         #appSection {
-            display: none; /* Tersembunyi di awal */
+            display: none;
+            animation: slideUp 0.5s ease-out;
         }
 
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
         }
 
-        /* Filter & Search Bar Area */
+        header h1 {
+            color: var(--primary);
+            margin: 0 0 10px 0;
+        }
+
+        /* Controls: Search & Filter */
         .controls {
             display: flex;
             gap: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
+            background: var(--white);
+            padding: 20px;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
         }
 
-        .search-box {
-            flex: 2;
-            min-width: 200px;
-        }
-        
-        .filter-box {
-            flex: 1;
-            min-width: 150px;
-        }
+        .search-box { flex: 2; min-width: 250px; }
+        .filter-box { flex: 1; min-width: 200px; }
 
         /* Grid Layout */
         .grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 25px;
         }
 
+        /* Card Style */
         .card {
-            background: var(--card-bg);
+            background: var(--white);
             border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            border-left: 5px solid var(--primary);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid var(--text-grey); /* Default border */
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-left-color: var(--primary);
         }
 
         .subject-badge {
             display: inline-block;
-            background: #e6fffa;
-            color: var(--dark);
-            padding: 4px 10px;
+            background: #ffebee;
+            color: var(--primary);
+            padding: 6px 12px;
             border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-bottom: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 12px;
             text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .name {
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            color: var(--text-dark);
+            line-height: 1.4;
         }
 
         .wa-btn {
-            background-color: var(--primary);
+            background-color: var(--primary); /* Menggunakan Merah agar senada */
             color: white;
             text-decoration: none;
-            padding: 10px;
-            border-radius: 6px;
+            padding: 12px;
+            border-radius: 8px;
             text-align: center;
-            font-weight: bold;
+            font-weight: 600;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            transition: opacity 0.3s;
+            gap: 10px;
+            transition: background 0.3s;
         }
 
         .wa-btn:hover {
-            opacity: 0.9;
+            background-color: var(--primary-dark);
         }
 
-        .icon {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
+        .icon { width: 20px; height: 20px; fill: currentColor; }
 
         .loading {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 40px;
+            color: var(--text-grey);
             font-style: italic;
-            color: #666;
+        }
+
+        /* Animations */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            #loginSection { padding: 25px; margin: 20px auto; }
+            .controls { flex-direction: column; }
         }
     </style>
 </head>
@@ -176,32 +240,51 @@
 
     <!-- HALAMAN 1: FORM DATA DIRI SISWA -->
     <div id="loginSection">
-        <h2 style="text-align: center; color: var(--dark);">Data Pengunjung</h2>
-        <p style="text-align: center; font-size: 0.9rem; margin-bottom: 20px;">Isi data diri untuk melihat daftar pengajar.</p>
+        <h2>Data Siswa</h2>
+        <p class="subtitle">Mohon lengkapi data diri Anda sebelum menghubungi pengajar.</p>
         
         <form id="studentForm">
             <div class="form-group">
                 <label>Nama Lengkap</label>
                 <input type="text" id="sNama" required placeholder="Contoh: Budi Santoso">
             </div>
+            
             <div class="form-group">
                 <label>Asal Sekolah</label>
-                <input type="text" id="sSekolah" required placeholder="Contoh: SMAN 1 Jakarta">
+                <input type="text" id="sSekolah" required placeholder="Contoh: SMAN 1 Semarang">
             </div>
+            
             <div class="form-group">
                 <label>Kelas</label>
                 <select id="sKelas" required>
                     <option value="">-- Pilih Kelas --</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="Alumni">Alumni / Gap Year</option>
+                    <option value="3 SMA">3 SMA</option>
+                    <option value="2 SMA">2 SMA</option>
+                    <option value="1 SMA">1 SMA</option>
+                    <option value="3 SMP">3 SMP</option>
+                    <option value="2 SMP">2 SMP</option>
+                    <option value="1 SMP">1 SMP</option>
+                    <option value="6 SD">6 SD</option>
+                    <option value="5 SD">5 SD</option>
+                    <option value="4 SD">4 SD</option>
+                    <option value="ALUMNI">ALUMNI</option>
                 </select>
             </div>
+            
             <div class="form-group">
                 <label>Asal Cabang</label>
-                <input type="text" id="sCabang" required placeholder="Contoh: Cabang Tebet">
+                <select id="sCabang" required>
+                    <option value="">-- Pilih Cabang --</option>
+                    <option value="Neutron Kompol Maksum">Neutron Kompol Maksum</option>
+                    <option value="Neutron Abdulrahman Saleh">Neutron Abdulrahman Saleh</option>
+                    <option value="Neutron Pedurungan">Neutron Pedurungan</option>
+                    <option value="Neutron Banyumanik">Neutron Banyumanik</option>
+                    <option value="Neutron Ungaran">Neutron Ungaran</option>
+                    <option value="Neutron Kendal">Neutron Kendal</option>
+                    <option value="Neutron Salatiga">Neutron Salatiga</option>
+                </select>
             </div>
+            
             <div class="form-group">
                 <label>Keperluan</label>
                 <select id="sKeperluan" required>
@@ -209,42 +292,58 @@
                     <option value="Tanya Jadwal">Menanyakan Jadwal</option>
                     <option value="Konsultasi PR">Konsultasi PR/Tugas</option>
                     <option value="Izin Tidak Masuk">Izin Tidak Masuk</option>
-                    <option value="Lainnya">Lainnya</option>
+                    <option value="Konsultasi Akademik">Konsultasi Akademik</option>
+                    <option value="Lainnya">Lainnya...</option>
                 </select>
+                <!-- Input muncul jika pilih Lainnya -->
+                <div id="inputLainnyaContainer">
+                    <input type="text" id="sKeperluanLainnya" placeholder="Tuliskan keperluan Anda di sini...">
+                </div>
             </div>
-            <button type="submit" class="primary-btn">Cari Pengajar</button>
+            
+            <button type="submit" class="primary-btn">Lanjut ke Daftar Pengajar</button>
         </form>
     </div>
 
     <!-- HALAMAN 2: DAFTAR PENGAJAR -->
     <div id="appSection" class="container">
         <header>
-            <h1>Daftar Kontak Pengajar</h1>
-            <p id="welcomeMsg"></p>
+            <h1>Daftar Pengajar</h1>
+            <p id="welcomeMsg" style="color: var(--text-grey); margin-bottom: 0;">Silakan cari pengajar sesuai mata pelajaran.</p>
         </header>
 
         <div class="controls">
             <!-- Filter Mata Pelajaran -->
             <select id="subjectFilter" class="filter-box">
                 <option value="all">Semua Mata Pelajaran</option>
-                <!-- Opsi akan diisi otomatis lewat JS -->
             </select>
 
             <!-- Search Bar -->
             <input type="text" id="searchInput" class="search-box" placeholder="Cari Nama Pengajar...">
         </div>
 
-        <div id="loading" class="loading">Sedang mengambil data...</div>
+        <div id="loading" class="loading">
+            <svg style="width: 40px; height: 40px; animation: spin 1s linear infinite;" viewBox="0 0 50 50">
+                <circle cx="25" cy="25" r="20" fill="none" stroke="#D32F2F" stroke-width="4"></circle>
+            </svg>
+            <p>Sedang memuat data...</p>
+        </div>
+        
         <div id="teacherList" class="grid"></div>
+        
+        <!-- Tombol Kembali (Optional, reset form) -->
+        <div style="text-align: center; margin-top: 40px;">
+            <button onclick="location.reload()" style="background: none; border: none; color: var(--text-grey); cursor: pointer; text-decoration: underline;">Kembali ke Data Diri</button>
+        </div>
     </div>
 
     <script>
-        // --- KONFIGURASI ---
+        // --- KONFIGURASI SPREADSHEET ---
         const SHEET_ID = '1pFEnfP-sC5lqyZ0dUrqnJ6hLlO22cUr7iMuVnttZzpM';
         const SHEET_NAME = 'data';
         const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&sheet=${SHEET_NAME}`;
 
-        // --- VARIABEL GLOBAL ---
+        // --- VARIABEL STATE ---
         let teachersData = [];
         let studentData = {};
 
@@ -252,51 +351,73 @@
         const loginSection = document.getElementById('loginSection');
         const appSection = document.getElementById('appSection');
         const studentForm = document.getElementById('studentForm');
+        
+        const elKeperluan = document.getElementById('sKeperluan');
+        const elKeperluanLainnya = document.getElementById('sKeperluanLainnya');
+        const elContainerLainnya = document.getElementById('inputLainnyaContainer');
+
         const listContainer = document.getElementById('teacherList');
         const loading = document.getElementById('loading');
         const searchInput = document.getElementById('searchInput');
         const subjectFilter = document.getElementById('subjectFilter');
         const welcomeMsg = document.getElementById('welcomeMsg');
 
-        // --- 1. LOGIKA FORM SISWA ---
+        // --- 1. LOGIKA TAMPILAN "LAINNYA" ---
+        elKeperluan.addEventListener('change', function() {
+            if (this.value === 'Lainnya') {
+                elContainerLainnya.style.display = 'block';
+                elKeperluanLainnya.setAttribute('required', 'true');
+            } else {
+                elContainerLainnya.style.display = 'none';
+                elKeperluanLainnya.removeAttribute('required');
+                elKeperluanLainnya.value = ''; // Reset nilai
+            }
+        });
+
+        // --- 2. LOGIKA SUBMIT FORM SISWA ---
         studentForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
-            // Simpan data siswa ke object
+            // Cek Keperluan (Dropdown atau Custom)
+            let finalKeperluan = elKeperluan.value;
+            if (finalKeperluan === 'Lainnya') {
+                finalKeperluan = elKeperluanLainnya.value;
+            }
+
+            // Simpan data siswa
             studentData = {
                 nama: document.getElementById('sNama').value,
                 sekolah: document.getElementById('sSekolah').value,
                 kelas: document.getElementById('sKelas').value,
                 cabang: document.getElementById('sCabang').value,
-                keperluan: document.getElementById('sKeperluan').value
+                keperluan: finalKeperluan
             };
 
-            // Pindah Tampilan
+            // Animasi Transisi
             loginSection.style.display = 'none';
             appSection.style.display = 'block';
             
-            welcomeMsg.innerText = `Halo ${studentData.nama}, silakan pilih pengajar di bawah ini.`;
+            welcomeMsg.innerHTML = `Halo <b>${studentData.nama}</b> (${studentData.kelas}), berikut daftar pengajar untukmu.`;
 
             // Mulai ambil data
             fetchTeachers();
         });
 
-        // --- 2. LOGIKA AMBIL DATA ---
+        // --- 3. AMBIL DATA DARI GOOGLE SHEETS ---
         async function fetchTeachers() {
             try {
                 const response = await fetch(CSV_URL);
                 const text = await response.text();
                 
+                // Parsing CSV yang aman (menangani koma dalam kutip)
                 const rows = text.split('\n').map(row => {
-                    // Regex untuk menangani CSV dengan aman
                     const regex = /,(?=(?:(?:[^"]*"){2})*[^"]*$)/;
                     return row.split(regex).map(cell => cell.replace(/^"|"$/g, '').trim());
                 });
 
-                // Hapus header
-                rows.shift(); 
+                rows.shift(); // Buang header
 
-                // Mapping data
+                // Mapping Data
                 teachersData = rows
                     .filter(row => row.length > 1 && row[1]) 
                     .map(row => ({
@@ -311,15 +432,13 @@
 
             } catch (error) {
                 console.error(error);
-                loading.innerText = 'Gagal memuat data.';
+                loading.innerHTML = '<p style="color:red">Gagal memuat data. Coba refresh halaman.</p>';
             }
         }
 
-        // --- 3. ISI DROPDOWN FILTER MAPEL ---
+        // --- 4. ISI DROPDOWN FILTER MAPEL ---
         function populateSubjectFilter(data) {
-            // Ambil mapel unik
             const subjects = [...new Set(data.map(item => item.subject))].sort();
-            
             subjects.forEach(subj => {
                 const option = document.createElement('option');
                 option.value = subj;
@@ -328,7 +447,7 @@
             });
         }
 
-        // --- 4. FORMAT DATA & RENDER ---
+        // --- 5. HELPER FUNCTION ---
         function formatPhoneNumber(phone) {
             if (!phone) return '';
             let cleaned = phone.replace(/\D/g, ''); 
@@ -337,24 +456,25 @@
         }
 
         function createWaLink(phone) {
-            // Membuat pesan template otomatis
             const text = `Halo Kak, perkenalkan saya:
-Nama: ${studentData.nama}
-Asal Sekolah: ${studentData.sekolah}
-Kelas: ${studentData.kelas}
-Cabang: ${studentData.cabang}
+*Nama:* ${studentData.nama}
+*Asal Sekolah:* ${studentData.sekolah}
+*Kelas:* ${studentData.kelas}
+*Cabang:* ${studentData.cabang}
 
-Keperluan saya: ${studentData.keperluan}.
+*Keperluan saya:* ${studentData.keperluan}.
+
 Mohon responsnya ya kak, Terima kasih.`;
             
             return `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
         }
 
+        // --- 6. RENDER KARTU PENGAJAR ---
         function renderTeachers(data) {
             listContainer.innerHTML = '';
             
             if (data.length === 0) {
-                listContainer.innerHTML = '<p style="text-align:center; width:100%;">Data tidak ditemukan.</p>';
+                listContainer.innerHTML = '<p style="text-align:center; width:100%; color:#666;">Data tidak ditemukan.</p>';
                 return;
             }
 
@@ -370,6 +490,7 @@ Mohon responsnya ya kak, Terima kasih.`;
                         <div class="name">${teacher.name}</div>
                     </div>
                     <a href="${waLink}" target="_blank" class="wa-btn">
+                        <!-- Icon WA SVG -->
                         <svg class="icon" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.008-.57-.008-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                         Hubungi via WA
                     </a>
@@ -379,25 +500,20 @@ Mohon responsnya ya kak, Terima kasih.`;
             });
         }
 
-        // --- 5. LOGIKA PENCARIAN & FILTER ---
+        // --- 7. FILTERING ---
         function filterData() {
             const keyword = searchInput.value.toLowerCase();
             const subject = subjectFilter.value;
 
             const filtered = teachersData.filter(teacher => {
-                // Cek apakah Mapel cocok (atau 'all' dipilih)
                 const isSubjectMatch = subject === 'all' || teacher.subject === subject;
-                
-                // Cek apakah Nama mengandung kata kunci pencarian
                 const isNameMatch = teacher.name.toLowerCase().includes(keyword);
-
                 return isSubjectMatch && isNameMatch;
             });
 
             renderTeachers(filtered);
         }
 
-        // Event Listeners
         searchInput.addEventListener('input', filterData);
         subjectFilter.addEventListener('change', filterData);
 
